@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import User from "../model/structure.js";
@@ -7,8 +10,10 @@ import User from "../model/structure.js";
 passport.use(
   new GoogleStrategy(
     {
-      clientID:"966183659663-8dcl6htm9pdog5nlvi21qo6l37eaqb5g.apps.googleusercontent.com",
-      clientSecret:"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",
+      clientID:process.env.GOOGLE_CLIENT_ID,
+    //   "966183659663-8dcl6htm9pdog5nlvi21qo6l37eaqb5g.apps.googleusercontent.com",
+      clientSecret:process.env.GOOGLE_CLIENT_SECRET,
+    //   "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",
       callbackURL: "/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
