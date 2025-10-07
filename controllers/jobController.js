@@ -45,7 +45,7 @@ export const updateJob = async (req, res) => {
 
 export const deleteJob = async (req, res) => {
     try {
-        const job = await JobLisiting.findById(req.params.id);
+        const job = await JobListing.findById(req.params.id);
         if(!job) return res.status(404).json({message: "Job not found"});
 
         await job.deleteOne();

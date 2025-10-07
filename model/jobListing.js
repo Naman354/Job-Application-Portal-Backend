@@ -24,4 +24,4 @@ const jobListingSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 const JobListing = mongoose.model("JobListing", jobListingSchema);
-module.exports = JobListing;
+export default JobListing;
