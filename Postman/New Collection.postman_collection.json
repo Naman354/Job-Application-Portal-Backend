@@ -17,7 +17,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"Naman\",\r\n  \"email\": \"naman@example.com\",\r\n  \"password\": \"secret456\"\r\n}\r\n",
+							"raw": "{\r\n  \"email\": \"new@example.com\",\r\n  \"password\": \"not123456\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -25,12 +25,44 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5500/api/users/register",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/users/login",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SignIn Route",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"newuser\",\r\n  \"email\": \"new@example.com\",\r\n  \"password\": \"not123456\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/users/register",
+							"protocol": "https",
+							"host": [
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
+							],
 							"path": [
 								"api",
 								"users",
@@ -41,10 +73,23 @@
 					"response": []
 				},
 				{
-					"name": "SignIn Route",
+					"name": "GoogleAuth",
 					"request": {
 						"method": "GET",
-						"header": []
+						"header": [],
+						"url": {
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/auth/google",
+							"protocol": "https",
+							"host": [
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"auth",
+								"google"
+							]
+						}
 					},
 					"response": []
 				}
@@ -60,13 +105,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTUxNDRlMDVkNzQyMjE5Y2NmMzA0ZSIsImlhdCI6MTc1OTg0NDE4OSwiZXhwIjoxNzU5ODQ3Nzg5fQ.Wlk4i5AEIfjhGapC1l-r5kWEnMJtDlfUv-TGZ99rPFA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjI3NSwiZXhwIjoxNzU5ODc1ODc1fQ.jdrcfmHBI18XZQZJeTSLX2Jo7rG9yD5p3wIKv7iSR-I",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": " {\r\n  \"title\": \"Software Engineer\",\r\n  \"description\": \"Develop web apps\",\r\n  \"company\": \"NewCompany\",\r\n  \"location\": \"Delhi\"\r\n}",
+							"raw": " {\r\n  \"title\": \"Software Engineer\",\r\n  \"description\": \"Develop web apps\",\r\n  \"company\": \"Amazon\",\r\n  \"location\": \"Gurgaon\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -74,12 +119,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5500/api/jobs/",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/jobs/",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"jobs",
@@ -96,7 +142,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTUxNDRlMDVkNzQyMjE5Y2NmMzA0ZSIsImlhdCI6MTc1OTg0NDE4OSwiZXhwIjoxNzU5ODQ3Nzg5fQ.Wlk4i5AEIfjhGapC1l-r5kWEnMJtDlfUv-TGZ99rPFA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjI3NSwiZXhwIjoxNzU5ODc1ODc1fQ.jdrcfmHBI18XZQZJeTSLX2Jo7rG9yD5p3wIKv7iSR-I",
 								"type": "text"
 							}
 						],
@@ -110,16 +156,17 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5500/api/jobs/68e517c705d742219ccf305c",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/jobs/68e5857845c90c8cda6a757f",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"jobs",
-								"68e517c705d742219ccf305c"
+								"68e5857845c90c8cda6a757f"
 							]
 						}
 					},
@@ -132,17 +179,18 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTUxNDRlMDVkNzQyMjE5Y2NmMzA0ZSIsImlhdCI6MTc1OTg0NDE4OSwiZXhwIjoxNzU5ODQ3Nzg5fQ.Wlk4i5AEIfjhGapC1l-r5kWEnMJtDlfUv-TGZ99rPFA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjI3NSwiZXhwIjoxNzU5ODc1ODc1fQ.jdrcfmHBI18XZQZJeTSLX2Jo7rG9yD5p3wIKv7iSR-I",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5500/api/jobs/",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/jobs/",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"jobs",
@@ -166,21 +214,22 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTUxNDRlMDVkNzQyMjE5Y2NmMzA0ZSIsImlhdCI6MTc1OTg0NDE4OSwiZXhwIjoxNzU5ODQ3Nzg5fQ.Wlk4i5AEIfjhGapC1l-r5kWEnMJtDlfUv-TGZ99rPFA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjI3NSwiZXhwIjoxNzU5ODc1ODc1fQ.jdrcfmHBI18XZQZJeTSLX2Jo7rG9yD5p3wIKv7iSR-I",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5500/api/jobs/68e517c705d742219ccf305c",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/jobs/68e5856445c90c8cda6a757c",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"jobs",
-								"68e517c705d742219ccf305c"
+								"68e5856445c90c8cda6a757c"
 							]
 						}
 					},
@@ -201,7 +250,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTUxNDRlMDVkNzQyMjE5Y2NmMzA0ZSIsImlhdCI6MTc1OTg0NDE4OSwiZXhwIjoxNzU5ODQ3Nzg5fQ.Wlk4i5AEIfjhGapC1l-r5kWEnMJtDlfUv-TGZ99rPFA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjY1NywiZXhwIjoxNzU5ODc2MjU3fQ.8zje2AC34g3RMXTDDVHc9_aOmXp1WBhdyFjLPhJwJlI",
 								"type": "text"
 							}
 						],
@@ -215,12 +264,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5500/api/applications/jobs",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/applications/jobs",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"applications",
@@ -247,7 +297,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTUxNDRlMDVkNzQyMjE5Y2NmMzA0ZSIsImlhdCI6MTc1OTg0NDE4OSwiZXhwIjoxNzU5ODQ3Nzg5fQ.Wlk4i5AEIfjhGapC1l-r5kWEnMJtDlfUv-TGZ99rPFA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjY1NywiZXhwIjoxNzU5ODc2MjU3fQ.8zje2AC34g3RMXTDDVHc9_aOmXp1WBhdyFjLPhJwJlI",
 								"type": "text"
 							}
 						],
@@ -256,12 +306,13 @@
 							"raw": " {\r\n    \"_id\": \"65123abcde4567890f123456\",\r\n    \"title\": \"Software Engineer\",\r\n    \"company\": \"MyCompany\",\r\n    \"location\": \"Remote\",\r\n    \"posted_by\": \"64f9e1abc123456789012345\"\r\n  }"
 						},
 						"url": {
-							"raw": "http://localhost:5500/api/applications/",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/applications/",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"applications",
@@ -285,7 +336,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTUxNDRlMDVkNzQyMjE5Y2NmMzA0ZSIsImlhdCI6MTc1OTg0NDE4OSwiZXhwIjoxNzU5ODQ3Nzg5fQ.Wlk4i5AEIfjhGapC1l-r5kWEnMJtDlfUv-TGZ99rPFA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjY1NywiZXhwIjoxNzU5ODc2MjU3fQ.8zje2AC34g3RMXTDDVHc9_aOmXp1WBhdyFjLPhJwJlI",
 								"type": "text"
 							}
 						],
@@ -299,16 +350,17 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5500/api/applications/68e51b2c05d742219ccf3070",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/applications/68e5179a05d742219ccf3059",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"applications",
-								"68e51b2c05d742219ccf3070"
+								"68e5179a05d742219ccf3059"
 							]
 						}
 					},
@@ -321,13 +373,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTUxNDRlMDVkNzQyMjE5Y2NmMzA0ZSIsImlhdCI6MTc1OTg0NDE4OSwiZXhwIjoxNzU5ODQ3Nzg5fQ.Wlk4i5AEIfjhGapC1l-r5kWEnMJtDlfUv-TGZ99rPFA",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjY1NywiZXhwIjoxNzU5ODc2MjU3fQ.8zje2AC34g3RMXTDDVHc9_aOmXp1WBhdyFjLPhJwJlI",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"job_listing\": \"68e5179a05d742219ccf3059\",\r\n  \"resume_link\": \"http://example.com/resume.pdf\",\r\n  \"cover_letter\": \"I am very interested in this position.\"\r\n}",
+							"raw": "{\r\n  \"job_listing\": \"68e5179a05d742219ccf3059\",\r\n  \"resume_link\": \"http://render.com/resume.pdf\",\r\n  \"cover_letter\": \"I am interested in this position.\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -335,12 +387,13 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:5500/api/applications",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/applications",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"applications"
@@ -361,12 +414,13 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:5500/api/applications/68e51b2c05d742219ccf3070",
-							"protocol": "http",
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/applications/68e51b2c05d742219ccf3070",
+							"protocol": "https",
 							"host": [
-								"localhost"
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
 							],
-							"port": "5500",
 							"path": [
 								"api",
 								"applications",
