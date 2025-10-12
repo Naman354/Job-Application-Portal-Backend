@@ -21,19 +21,15 @@ connectDB();
 
 const app = express();
 
-// For ES modules: get __dirname
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static frontend files from "public" folder
 app.use(express.static(path.join(__dirname, "frontend")));
 
-// Parse JSON request bodies
 app.use(express.json());
 
-// Session setup
 app.use(cors({
-  origin: "*", // for testing only; restrict in production
+  origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
@@ -48,37 +44,34 @@ app.use(
   })
 );
 
-// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Routes
-app.use("/auth", authRoutes); // Google OAuth
-app.use("/api/users", userRoutes); // login/signup
-app.use("/api/jobs", jobRoutes); // recruiter routes
-app.use("/api/applications", applicationRoutes); // applicant routes
+app.use("/auth", authRoutes);
+app.use("/api/users", userRoutes); 
+app.use("/api/jobs", jobRoutes); 
+app.use("/api/applications", applicationRoutes); 
 
-// Serve login page
 app.get("/users/login", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "index.html"));
 });
 
-// Serve signup page
 app.get("/users/signup", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "signup.html"));
 });
 
-// Serve dashboard / user page
 app.get("/users", (req, res) => {
   res.sendFile(path.join(__dirname, "frontend", "user.html")); // your user page
 });
 
-// Home route
+app.get("/reset-password", (req, res) => {
+  res.sendFile(path.join(__dirname, "frontend", "reset-password.html"));
+});
+
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
-// Fallback for unknown routes
 app.use((req, res) => {
   res.status(404).send("404 Not Found");
 });

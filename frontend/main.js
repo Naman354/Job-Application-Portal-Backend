@@ -87,3 +87,17 @@ function handleGoogleRedirect() {
     window.location.href = "user.html";
   }
 }
+
+document.getElementById("forgotPasswordBtn").addEventListener("click", async () => {
+  const email = prompt("Enter your registered email:");
+  if (!email) return;
+
+  const res = await fetch("/api/users/forgot-password", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await res.json();
+  alert(data.message + (data.token ? `\nYour reset token: ${data.token}` : ""));
+});
