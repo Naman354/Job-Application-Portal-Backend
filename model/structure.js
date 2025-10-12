@@ -35,6 +35,13 @@ userSchema.pre("save", async function(next){
     next();
 });
 
+// Example regex: at least 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special char
+export const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+export function validatePassword(password) {
+  return passwordRegex.test(password);
+}
+
 userSchema.methods.matchPassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password);
 };
