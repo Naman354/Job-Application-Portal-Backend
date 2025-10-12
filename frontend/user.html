@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Dashboard</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <script>
+  // ✅ Extract token and role from URL query if present
+  const urlParams = new URLSearchParams(window.location.search);
+  const tokenFromUrl = urlParams.get("token");
+  const roleFromUrl = urlParams.get("role");
+
+  // ✅ If token and role exist in query, save them to localStorage
+  if (tokenFromUrl && roleFromUrl) {
+    localStorage.setItem("token", tokenFromUrl);
+    localStorage.setItem("role", roleFromUrl);
+
+    // ✅ Clean URL
+    window.history.replaceState({}, document.title, "/frontend/user.html");
+  }
+
+  // ✅ Load from localStorage if already saved
+  const storedToken = localStorage.getItem("token");
+  const storedRole = localStorage.getItem("role");
+
+  // ✅ Redirect back to login if still missing
+  if (!storedToken || !storedRole) {
+    window.location.href = "login.html";
+  }
+</script>
+
+  <style>
+body {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  line-height: 1.5;
+  display:block;
+}
+
+h2, h3 {
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+#userInfo {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+#logout {
+  margin-bottom: 20px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+#addFormContainer {
+  margin-bottom: 30px;
+}
+
+#addForm input, 
+#addForm textarea, 
+#addForm select, 
+#addForm button {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin-bottom: 10px;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 30px;
+  border: 1px solid #000;
+}
+
+th, td {
+  border: 1px solid #000;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f5f5f5;
+}
+
+button.updateBtn, button.deleteBtn {
+  padding: 4px 8px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+/* Optional: alternate row coloring for readability */
+tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tbody tr:hover {
+  background-color: #eef;
+}
+</style>
+
+
+</head>
+<body>
+  <!-- Dashboard header -->
+  <h2>Welcome to your Dashboard</h2>
+  <p id="userInfo"></p>
+  <button id="logout">Logout</button>
+
+  <hr />
+
+  <!-- Add form -->
+  <div id="addFormContainer">
+    <h3>Add New <span id="itemType"></span></h3>
+    <form id="addForm">
+      <div id="formFields"></div>
+      <button type="submit">Add</button>
+    </form>
+  </div>
+
+  <hr />
+
+  <!-- Content: jobs / applications -->
+  <div id="content"></div>
+
+  <script src="/main.js"></script>
+  <script>
+    const baseURL = getBaseURL();
+    const token = localStorage.getItem("token");
+    const role = localStorage.getItem("role");
+
+    if (!token) window.location.href = "/users/login";
+
+    document.getElementById("userInfo").innerText = `Logged in as ${role}`;
+
+    const formFieldsContainer = document.getElementById("formFields");
+    const itemTypeSpan = document.getElementById("itemType");
+
+    // Render add form fields
+    if (role === "recruiter") {
+      itemTypeSpan.innerText = "Job";
+      formFieldsContainer.innerHTML = `
+        <input type="text" id="title" placeholder="Job Title" required />
+        <input type="text" id="company" placeholder="Company" required />
+        <input type="text" id="location" placeholder="Location" required />
+        <textarea id="description" placeholder="Job Description" required></textarea>
+      `;
+    } else {
+      itemTypeSpan.innerText = "Application";
+      formFieldsContainer.innerHTML = `
+        <select id="job_listing" required><option value="">Select a job</option></select>
+<input type="text" id="resume_link" placeholder="Resume Link" required />
+        <textarea id="cover_letter" placeholder="Cover Letter" rows="3"></textarea>
+      `;
+    // Call this after setting up the form
+     populateJobDropdown();
+}
+
+    // Handle add form submission
+    document.getElementById("addForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let data, res;
+
+      if (role === "recruiter") {
+        data = {
+          title: document.getElementById("title").value,
+          description: document.getElementById("description").value,
+          company: document.getElementById("company").value,
+          location: document.getElementById("location").value
+        };
+        res = await fetch(`${baseURL}/api/jobs`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify(data)
+        });
+      } else {
+        data = {
+          job_listing: document.getElementById("job_listing").value,
+          resume_link: document.getElementById("resume_link").value,
+          cover_letter: document.getElementById("cover_letter").value
+        };
+        res = await fetch(`${baseURL}/api/applications`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          body: JSON.stringify(data)
+        });
+      }
+
+      if (res.ok) {
+        alert(role === "recruiter" ? "Job added!" : "Application submitted!");
+        e.target.reset();
+        loadData();
+      } else {
+        const err = await res.json();
+        alert(err.message || "Error");
+      }
+    });
+
+ async function populateJobDropdown() {
+  try {
+    const res = await fetch(`${baseURL}/api/applications/jobs`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const jobs = await res.json();
+    const jobSelect = document.getElementById("job_listing");
+
+    jobSelect.innerHTML = jobs.length
+      ? jobs.map(job => `<option value="${job._id}">${job.title} at ${job.company}</option>`).join("")
+      : `<option value="">No jobs available</option>`;
+  } catch (err) {
+    console.error("Error fetching jobs:", err);
+  }
+}
+
+
+    async function loadData() {
+      const contentDiv = document.getElementById("content");
+      contentDiv.innerHTML = "";
+
+      try {
+        if (role === "recruiter") {
+          const res = await fetch(`${baseURL}/api/jobs`, { headers: { Authorization: `Bearer ${token}` } });
+          const jobs = await res.json();
+
+          contentDiv.appendChild(document.createElement("h3")).innerText = "Your Jobs";
+
+          if (jobs.length === 0) contentDiv.innerHTML += "<p>No jobs posted yet.</p>";
+          else {
+            const table = document.createElement("table");
+            table.innerHTML = `
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Company</th>
+                  <th>Location</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${jobs.map(job => `
+                  <tr data-id="${job._id}">
+                    <td>${job.title}</td>
+                    <td>${job.company}</td>
+                    <td>${job.location}</td>
+                    <td>${job.description}</td>
+                    <td>
+                      <button class="updateBtn">Update</button>
+                      <button class="deleteBtn">Delete</button>
+                    </td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            `;
+            contentDiv.appendChild(table);
+
+            table.querySelectorAll(".deleteBtn").forEach(btn => {
+              btn.addEventListener("click", async (e) => {
+                const row = e.target.closest("tr");
+                const id = row.dataset.id;
+                if (confirm("Delete this job?")) {
+                  const delRes = await fetch(`${baseURL}/api/jobs/${id}`, {
+                    method: "DELETE",
+                    headers: { Authorization: `Bearer ${token}` }
+                  });
+                  if (delRes.ok) loadData();
+                  else alert((await delRes.json()).message || "Error deleting job");
+                }
+              });
+            });
+
+            table.querySelectorAll(".updateBtn").forEach(btn => {
+              btn.addEventListener("click", async (e) => {
+                const row = e.target.closest("tr");
+                const id = row.dataset.id;
+                const updatedJob = {
+                  title: prompt("Title:", row.children[0].innerText) || row.children[0].innerText,
+                  company: prompt("Company:", row.children[1].innerText) || row.children[1].innerText,
+                  location: prompt("Location:", row.children[2].innerText) || row.children[2].innerText,
+                  description: prompt("Description:", row.children[3].innerText) || row.children[3].innerText
+                };
+                const updateRes = await fetch(`${baseURL}/api/jobs/${id}`, {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+                  body: JSON.stringify(updatedJob)
+                });
+                if (updateRes.ok) loadData();
+                else alert((await updateRes.json()).message || "Error updating job");
+              });
+            });
+          }
+
+        } else {
+          const [jobsRes, appsRes] = await Promise.all([
+            fetch(`${baseURL}/api/applications/jobs`, { headers: { Authorization: `Bearer ${token}` } }),
+            fetch(`${baseURL}/api/applications`, { headers: { Authorization: `Bearer ${token}` } })
+          ]);
+          const jobs = await jobsRes.json();
+          const applications = await appsRes.json();
+
+          // Jobs table
+          contentDiv.appendChild(document.createElement("h3")).innerText = "Available Jobs";
+          const jobsTable = document.createElement("table");
+          jobsTable.innerHTML = `
+            <thead>
+              <tr><th>Title</th><th>Company</th><th>Location</th><th>Description</th><th>Job ID</th></tr>
+            </thead>
+            <tbody>
+              ${jobs.map(job => `
+                <tr>
+                  <td>${job.title}</td>
+                  <td>${job.company}</td>
+                  <td>${job.location}</td>
+                  <td>${job.description}</td>
+                  <td>${job._id}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          `;
+          contentDiv.appendChild(jobsTable);
+
+          // Applications table
+          contentDiv.appendChild(document.createElement("h3")).innerText = "Your Applications";
+          const appsTable = document.createElement("table");
+          appsTable.innerHTML = `
+            <thead>
+              <tr><th>Job Title</th><th>Company</th><th>Location</th><th>Resume</th><th>Cover Letter</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              ${applications.map(app => `
+                <tr>
+                  <td>${app.job_listing?.title || "N/A"}</td>
+                  <td>${app.job_listing?.company || "N/A"}</td>
+                  <td>${app.job_listing?.location || "N/A"}</td>
+                  <td><a href="${app.resume_link}" target="_blank">View</a></td>
+                  <td>${app.cover_letter || "None"}</td>
+                  <td>${app.status}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          `;
+          contentDiv.appendChild(appsTable);
+        }
+      } catch (err) {
+        console.error(err);
+        contentDiv.innerHTML = "<p>Error loading data</p>";
+      }
+    }
+
+    document.getElementById("logout").addEventListener("click", () => {
+      clearAuthData();
+      window.location.href = "/users/login";
+    });
+
+    loadData();
+  </script>
+</body>
+</html>

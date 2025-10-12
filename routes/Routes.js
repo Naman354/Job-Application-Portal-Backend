@@ -7,14 +7,15 @@ import {
   getAllJobListings,
 } from "../controllers/jobAppControl.js";
 import protect from "../middleware/auth.js";
+import { authorizeRoles } from "../middleware/roleauth.js";
 
 const router = express.Router();
 
 router.get("/jobs", protect, getAllJobListings);
 router.get("/", protect, getApplications);
-router.post("/", protect, createApplication);
-router.put("/:id", protect, updateApplication);
-router.patch("/:id", protect, updateApplication);
-router.delete("/:id", protect, deleteApplication);
+router.post("/", protect, authorizeRoles("applicant"), createApplication);
+router.put("/:id", protect, authorizeRoles("applicant"), updateApplication);
+router.patch("/:id", protect, authorizeRoles("applicant"), updateApplication);
+router.delete("/:id", protect, authorizeRoles("applicant"), deleteApplication);
 
 export default router;

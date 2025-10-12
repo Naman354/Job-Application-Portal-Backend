@@ -15,6 +15,11 @@ const userSchema = new mongoose.Schema({
     password: {
         type:String,
     },
+    role: {
+        type:String,
+        enum:["applicant","recruiter"],
+        required:true,
+    },
     google_id: {
         type:String,
         unique:true,
