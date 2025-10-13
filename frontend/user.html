@@ -5,25 +5,20 @@
   <title>User Dashboard</title>
   <link rel="stylesheet" href="/styles.css" />
   <script>
-  // ✅ Extract token and role from URL query if present
   const urlParams = new URLSearchParams(window.location.search);
   const tokenFromUrl = urlParams.get("token");
   const roleFromUrl = urlParams.get("role");
 
-  // ✅ If token and role exist in query, save them to localStorage
   if (tokenFromUrl && roleFromUrl) {
     localStorage.setItem("token", tokenFromUrl);
     localStorage.setItem("role", roleFromUrl);
 
-    // ✅ Clean URL
     window.history.replaceState({}, document.title, "/frontend/user.html");
   }
 
-  // ✅ Load from localStorage if already saved
   const storedToken = localStorage.getItem("token");
   const storedRole = localStorage.getItem("role");
 
-  // ✅ Redirect back to login if still missing
   if (!storedToken || !storedRole) {
     window.location.href = "login.html";
   }
@@ -92,7 +87,6 @@ button.updateBtn, button.deleteBtn {
   cursor: pointer;
 }
 
-/* Optional: alternate row coloring for readability */
 tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
@@ -105,14 +99,12 @@ tbody tr:hover {
 
 </head>
 <body>
-  <!-- Dashboard header -->
   <h2>Welcome to your Dashboard</h2>
   <p id="userInfo"></p>
   <button id="logout">Logout</button>
 
   <hr />
 
-  <!-- Add form -->
   <div id="addFormContainer">
     <h3>Add New <span id="itemType"></span></h3>
     <form id="addForm">
@@ -123,7 +115,6 @@ tbody tr:hover {
 
   <hr />
 
-  <!-- Content: jobs / applications -->
   <div id="content"></div>
 
   <script src="/main.js"></script>
@@ -139,7 +130,6 @@ tbody tr:hover {
     const formFieldsContainer = document.getElementById("formFields");
     const itemTypeSpan = document.getElementById("itemType");
 
-    // Render add form fields
     if (role === "recruiter") {
       itemTypeSpan.innerText = "Job";
       formFieldsContainer.innerHTML = `
@@ -155,11 +145,9 @@ tbody tr:hover {
 <input type="text" id="resume_link" placeholder="Resume Link" required />
         <textarea id="cover_letter" placeholder="Cover Letter" rows="3"></textarea>
       `;
-    // Call this after setting up the form
      populateJobDropdown();
 }
 
-    // Handle add form submission
     document.getElementById("addForm").addEventListener("submit", async (e) => {
       e.preventDefault();
       let data, res;
@@ -301,7 +289,6 @@ tbody tr:hover {
           const jobs = await jobsRes.json();
           const applications = await appsRes.json();
 
-          // Jobs table
           contentDiv.appendChild(document.createElement("h3")).innerText = "Available Jobs";
           const jobsTable = document.createElement("table");
           jobsTable.innerHTML = `
@@ -322,7 +309,6 @@ tbody tr:hover {
           `;
           contentDiv.appendChild(jobsTable);
 
-          // Applications table
           contentDiv.appendChild(document.createElement("h3")).innerText = "Your Applications";
           const appsTable = document.createElement("table");
           appsTable.innerHTML = `

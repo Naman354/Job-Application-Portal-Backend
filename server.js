@@ -61,7 +61,7 @@ app.get("/users/signup", (req, res) => {
 });
 
 app.get("/users", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "user.html")); // your user page
+  res.sendFile(path.join(__dirname, "frontend", "user.html"));
 });
 
 app.get("/reset-password", (req, res) => {

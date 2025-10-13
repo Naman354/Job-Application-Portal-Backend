@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "bf4e35a7-d7fe-4b7d-91e1-f1966cd1a0c3",
-		"name": "New Collection",
+		"name": "Job APP Portal",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "48451096",
 		"_collection_link": "https://srinaman05-3997301.postman.co/workspace/Naman-Srivastava's-Workspace~3848bb91-f16a-4dbd-80d3-243ccce1190c/collection/48451096-bf4e35a7-d7fe-4b7d-91e1-f1966cd1a0c3?action=share&source=collection_link&creator=48451096"
@@ -48,7 +48,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"username\": \"newuser\",\r\n  \"email\": \"new@example.com\",\r\n  \"password\": \"not123456\"\r\n}\r\n",
+							"raw": "{\r\n  \"username\": \"Amresh\",\r\n  \"email\": \"amresh@example.com\",\r\n  \"password\": \"not123456\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -88,6 +88,68 @@
 							"path": [
 								"auth",
 								"google"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "forgot-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"aabb@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/users/forgot-password",
+							"protocol": "https",
+							"host": [
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"users",
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\": \"78ed79eb4f971ab71ed1915b9bbb57490019d56f\",\r\n    \"newPassword\":\"Ajay@1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://job-application-portal-backend-07uw.onrender.com/api/users/reset-password",
+							"protocol": "https",
+							"host": [
+								"job-application-portal-backend-07uw",
+								"onrender",
+								"com"
+							],
+							"path": [
+								"api",
+								"users",
+								"reset-password"
 							]
 						}
 					},
@@ -179,7 +241,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU4NGU4NDVjOTBjOGNkYTZhNzU3NSIsImlhdCI6MTc1OTg3MjI3NSwiZXhwIjoxNzU5ODc1ODc1fQ.jdrcfmHBI18XZQZJeTSLX2Jo7rG9yD5p3wIKv7iSR-I",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTU3YjczY2U5NDlmYmQzNjhlNzNmNCIsImlhdCI6MTc2MDAwNTQwNSwiZXhwIjoxNzYwMDA5MDA1fQ.zL6xxHZGNWAbV7cfZn5GjbRFhC1tMNGvNydo7f2Ncpo",
 								"type": "text"
 							}
 						],
