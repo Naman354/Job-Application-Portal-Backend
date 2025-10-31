@@ -12,7 +12,7 @@ export const register = async (req, res) => {
     return res.status(400).json({
       message: "Password must be at least 8 chars, include uppercase, lowercase, number, and special character."
     });
-    }
+    }   
         const userExists = await User.findOne({email});
         if (userExists) return res.status(400).json({message: "User already exists"});
 
